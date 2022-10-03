@@ -9,18 +9,13 @@ const Cursos = () =>{
     const [data, setData] = useState([])
     const [errorTrue, setErrorTrue] = useState(false)
     const [error, setError] = useState("")
-    const [lista1, setLista1] = useState({
-        id: 0,
-        codCurso: '',
-        nomeCurso: '',
-        periodo: '',
-    })
     const [cursoData, setCursoData] = useState({
         id: 0,
         codCurso: '',
         nomeCurso: '',
         periodo: '',
     })
+    
 
     const dataFromAPI = async () => {
         await axios(urlAPI)
@@ -45,7 +40,7 @@ const Cursos = () =>{
     }
 
     function listaAtualizada(curso, add = true){
-        const lista = lista1.filter(a => a.id != curso.id)
+        const lista = cursoData.filter(a => a.id != curso.id)
         if(add) lista.unshift(curso)
         return lista
     }
@@ -60,7 +55,7 @@ const Cursos = () =>{
         .then(resp => {
             let lista = listaAtualizada(resp.data)
             cursoData({ dadosCurso: cursoData.dadosCurso, lista})
-            setLista1(lista)
+            setCursoData(lista)
         })
         .catch(error => {
             console.log(error)
@@ -73,7 +68,7 @@ const Cursos = () =>{
             .then(resp => {
                 let lista = listaAtualizada(resp.data)
                 cursoData({ dadosCurso: cursoData.dadosCurso, lista})
-                setLista1(lista)
+                setCursoData(curso)
             })
             .catch(error => {
                 console.log(error)
@@ -81,8 +76,8 @@ const Cursos = () =>{
         }
     }
 
-    const alterarCurso = async () => {
-
+    const alterarCurso = async (curso) => {
+        setCursoData(curso)
     }
 
     useEffect(() => {
@@ -168,14 +163,14 @@ const Cursos = () =>{
                                     <td className="val-center">{curso.periodo}</td>
                                     <td>
                                         <button className='btn-alterar'
-                                        //onClick={() => this.carregar(aluno)} className='btn-alterar'
+                                        onClick={() => alterarCurso(curso)} 
                                         >
                                             Alterar
                                         </button>
                                     </td>
                                     <td>
                                         <button className='btn-remover'
-                                        //onClick={() => this.remover(aluno)} className='btn-remover'
+                                        onClick={() => deletarCurso(curso)} 
                                         >
                                             Remover
                                         </button>
