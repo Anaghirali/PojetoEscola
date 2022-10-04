@@ -91,7 +91,7 @@ carregar(aluno) {
 renderForm() {
 return (
 <div className="inclui-container">
-<label> RA: </label>
+<label id="style"> RA: </label>
 <input
 type="text"
 id="ra"
@@ -103,7 +103,7 @@ value={this.state.aluno.ra}
 
 onChange={ e => this.atualizaCampo(e)}
 />
-<label> Nome: </label>
+<label id="style"> Nome: </label>
 <input
 type="text"
 id="nome"
@@ -115,7 +115,7 @@ value={this.state.aluno.nome}
 
 onChange={ e => this.atualizaCampo(e)}
 />
-<label> Código do Curso: </label>
+<label id="style"> Código do Curso: </label>
 {/* <input
 type="number"
 id="codCurso"
@@ -125,7 +125,7 @@ name="codCurso"
 value={this.state.aluno.codCurso}
 onChange={ e => this.atualizaCampo(e)}
 /> */}
-<select name="codCurso" onChange={e => { this.atualizaCurso(e)}}>
+<select id="style" name="codCurso" onChange={e => { this.atualizaCurso(e)}}>
 {this.state.listaCurso.map(
     (curso) => 
             <option
