@@ -18,15 +18,17 @@ namespace ProjetoEscola_API.Controllers
     [Route("/")]
     public class HomeController : ControllerBase
     {
+        
         [HttpGet]
-        /*public String Inicio() {
-            return "Api Rodando!";
-        }*/
-        public ActionResult Inicio(){
+               public ActionResult Inicio(){
             return new ContentResult{
                 ContentType = "text/html",
                 Content = "<h1>Api De Teste Funcionando!!!</h1>"
             };
         }
+
+    
+    
     }
+
 }

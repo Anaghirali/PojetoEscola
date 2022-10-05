@@ -175,3 +175,4 @@
 /Users/u21418/Documents/ProjetoEscola/AlunoBE/obj/Debug/net6.0/ProjetoEscola_API.pdb
 /Users/u21418/Documents/ProjetoEscola/AlunoBE/obj/Debug/net6.0/ProjetoEscola_API.genruntimeconfig.cache
 /Users/u21418/Documents/ProjetoEscola/AlunoBE/obj/Debug/net6.0/ref/ProjetoEscola_API.dll
+/Users/u21418/Documents/ProjetoEscola/AlunoBE/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
