@@ -1,13 +1,38 @@
 using Microsoft.EntityFrameworkCore;
 using ProjetoEscola_API.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+ConfigurationManager configuration = builder.Configuration;
 
 //Criando o CORS
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 // Add services to the container.
-
+// Adding Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+// Adding Jwt Bearer
+.AddJwtBearer(options =>
+{
+options.SaveToken = true;
+options.RequireHttpsMetadata = false;
+options.TokenValidationParameters = new TokenValidationParameters()
+{
+ValidateIssuer = true,
+ValidateAudience = true,
+ValidAudience = configuration["JWT:ValidAudience"],
+ValidIssuer = configuration["JWT:ValidIssuer"],
+IssuerSigningKey = new
+SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+};
+});
 //Fazendo o builder do CORS
 builder.Services.AddCors(options => {
     options.AddPolicy(MyAllowSpecificOrigins, builder => { 
@@ -39,6 +64,10 @@ if (app.Environment.IsDevelopment())
 //Fazendo o App usar o CORS
 app.UseCors(MyAllowSpecificOrigins);
 
+app.UseAuthorization();
+
+// Authentication & Authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
