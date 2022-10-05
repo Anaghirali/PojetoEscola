@@ -1,5 +1,5 @@
 :root {
-  --bg-menu: #bdbbbb;
+  --bg-menu: #3e368b;
   --logo-width: 150px;
   --content-header-height: 60px;
   --content-footer-height: 40px;
@@ -17,7 +17,7 @@ body{
   grid-template-rows: var(--content-header-height) 1fr var(--content-footer-height);
   grid-template-areas: "logo menu" "content content" "footer footer";
   height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #6385cf;
   }
 
 aside.logo{
@@ -34,4 +34,9 @@ div.content {
 
 footer.footer {
   grid-area: footer;
+}
+
+#title{
+  font-family: 'Silkscreen';
+  font-size: 50px;
 }
