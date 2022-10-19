@@ -161,6 +161,8 @@ Cancelar
                             <th className='tabTituloRa'>Ra</th>
                             <th className='tabTituloNome'>Nome</th>
                             <th className='tabTituloCurso'>Curso</th>
+                            <th>Alterar</th>
+                            <th>Remover</th>
                         </tr>
                     </thead>
 
@@ -171,12 +173,12 @@ Cancelar
                                 <td>{aluno.nome}</td>
                                 <td>{aluno.codCurso}</td>
                                 <td>
-                                <button onClick={() => this.carregar(aluno)} >
+                                <button id="botaostyle" onClick={() => this.carregar(aluno)} >
                                 Altera
                                 </button>
                                 </td>
                                 <td>
-                                <button onClick={() => this.remover(aluno)} >
+                                <button id="botaostyle" onClick={() => this.remover(aluno)} >
                                 Remove
                                 </button>
                                 </td>

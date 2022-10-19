@@ -40,7 +40,7 @@ const Cursos = () =>{
     }
 
     function listaAtualizada(curso, add = true){
-        const lista = cursoData.filter(a => a.id != curso.id)
+        const lista = cursoData.filter(a => a.id !== curso.id)
         if(add) lista.unshift(curso)
         return lista
     }

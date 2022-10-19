@@ -7,6 +7,17 @@
     font-family: 'Silkscreen', cursive;
 }
 
+#botaostyle{
+    border-radius: 8px;
+    width: 100px;
+    height: 40px;
+    font-family: 'Silkscreen';
+    color: rgb(16, 13, 19);
+    background-color: rgb(157, 128, 204);
+    border-color: rgb(87, 23, 147);
+    border: 10px;
+}
+
 .cabecTabela {
     color: rgb(122, 114, 231);
     background-color: rgb(19, 5, 51);
@@ -98,4 +109,6 @@ input[type=text] {
             padding: 10px;
             }
 
+
+            
             

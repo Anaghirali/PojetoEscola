@@ -4,6 +4,8 @@ import { Routes, Route,  } from "react-router-dom";
 import Main from "./components/template/main/Main";
 import CrudAluno from "./components/CrudAluno/CrudAluno";
 import Cursos from "./components/Cursos/Curso"
+import Carometro from "./components/carometro/carometro";
+
 
 const Rotas = () => {
     return(
@@ -16,7 +18,8 @@ const Rotas = () => {
                 }/>
             <Route path = '/alunos' element={<CrudAluno />}/>
             <Route path = '/cursos' element = {<Cursos />}/>
-            <Route path="+" to='/' /> 
+            <Route path = '/carometro' element = {<Carometro />}/>
+            <Route path="#" to='/' /> 
         </Routes>
     )
 }
