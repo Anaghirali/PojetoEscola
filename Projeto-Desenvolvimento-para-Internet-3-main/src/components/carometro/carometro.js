@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-//import './Carometro.css';
+
+
 
 const Carometro = () => {
+
     const urlApiAlunos = "http://localhost:5035/api/controller"
-    const [data, setData] = useState([])
+    const urlAPICursos = "http://localhost:5035/api/controller/cursos"
     const [dataAtualizada, setDataAtualizada] = useState(true)
-    const avatar = ['adventurer', 'micah', 'bottts', 'adventurer-neutral', 'pixel-art']
+
+    const initialState = {
+        aluno: {id: 0, ra: '', nome: '', codCurso: 0},
+        curso: { id: 0, codCurso: "", nomeCurso: "", periodo: "" },
+        listaAlunos: [],
+        listaCursos: [],
+    }
+
+    const [listaCursos, setListaCursos] = useState(initialState.listaCursos);
+    const [listaAlunos, setListaAlunos] = useState(initialState.listaAlunos);
+    const [curso, setCurso] = useState(initialState.curso);
+
+    const avatar = ['pixel-art']
+
 
     function ramdomAvatar() {
         let tamanho = avatar.length
@@ -14,27 +29,53 @@ const Carometro = () => {
         let rd = avatar[av]
         return rd
     }
-
-    function geraStringAleatoria(tamanho) {
-        let stringAleatoria = '';
-        let caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (var i = 0; i < tamanho; i++) {
-            stringAleatoria += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-        }
-        return stringAleatoria;
+    const RandomLetter = () => {
+        return Math.random().toString(36).substring(2, 9);
     }
 
-    let imgURL = () => `https://avatars.dicebear.com/api/${ramdomAvatar()}/${geraStringAleatoria(8)}.svg`
+    function randomString(tamanho) {
+        let stringAleatoria = '';
+        let caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
 
     const dataFromAPI = async () => {
         await axios(urlApiAlunos)
             .then(resp => {
                 setDataAtualizada(true)
-                setData(resp.data)
+                setListaCursos(resp.data)
             })
             .catch(error => {
                 console.error(error)
             })
+    }
+
+    const dataFromAPI2 = async (codCurso) => {
+        return await axios(urlApiAlunos)
+            .then(resp => {
+                const DataCursos = resp.data
+                setDataAtualizada(true)
+                return DataCursos.filter(
+                    (aluno) => aluno.codCurso === codCurso
+                );
+            })
+            .catch(error => {
+                console.error(error)
+            })
+    }
+
+    const updateAlunos = async (e) => {
+        const codCurso = e.target.value;
+        if (e.target.value === "") {
+            setListaAlunos(initialState.listaAlunos);
+            setCurso(initialState.curso);
+            return
+        }
+        curso.codCurso = Number(codCurso)
+        const listaDeAlunos = await dataFromAPI2(curso.codCurso)
+        if(!Array.isArray(listaDeAlunos)) return
+
+        setListaAlunos(listaDeAlunos)
+        setCurso(curso)
     }
 
 
@@ -45,32 +86,53 @@ const Carometro = () => {
         }
     }, [dataAtualizada])
 
+
+    const SelectOPT = () => {
+        return (
+            <select name="codCurso" onChange={e => { updateAlunos(e) }}>
+                {listaCursos.map(
+                    (curso) =>
+                        <option
+                            key={curso.id}
+                            name="codCurso"
+                            value={curso.codCurso}
+                        >
+                            {curso.nomeCurso}
+                            -
+                            {curso.periodo}
+                        </option>
+
+                )}
+            </select>
+        )
+    }
+
     return (
-        
         <div className="text-center duration-75 rounded-lg">
-        <div className="flex flex-wrap  gap-5 w-screen items-center justify-between py-10 px-40 min-w-[100px]">
-            {data.map((datas) => {
-                return (
-                        <div key={datas.id} className="flex flex-wrap p-5 shadow-2xl shadow-blue-700 w-[200px] h-[350px]">
+            <span>{SelectOPT()}</span>
+            <div className="flex flex-wrap gap-5 w-screen items-center justify-between py-10 px-60 rounded-lg">
+                {listaAlunos.map((datas) => {
+                    return (
+                        <div key={datas.id} className="flex flex-wrap p-5 shadow-2xl shadow-blue-700 h-[370px] rounded-lg">
                             <div className="">
-                            <div className="">
-                                <div className="w-9/12 items-center self-center place-items-center">
-                                    <img src={imgURL()} alt={datas.nome} className="" loading="lazy" />
+                                <div className="">
+                                    <div className="w-12/12 items-center self-center place-items-center">
+                                        <img src={`https://avatars.dicebear.com/api/bottts/${RandomLetter()}.svg`} alt={datas.nome} />
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col flex-wrap w-[180px] pt-5 gap-3 text-left">
+                                    <span className="text-xl font-medium">{datas.nome}</span>
+                                    <span className="font-medium">RA: {datas.ra}</span>
+                                    <span className="">Curso: {datas.codCurso}</span>
                                 </div>
                             </div>
-
-                            <div className="flex flex-col flex-wrap w-[180px] pt-5 gap-3 text-left">
-                                <span className="text-teal-500 font-medium">{datas.nome}</span>
-                                <span className="font-medium">RA: {datas.ra}</span>
-                                <span className="">Curso: {datas.ra}</span>
-                            </div>
                         </div>
-                    </div>
-                )
-            })}
+                    )
+                })}
+            </div>
         </div>
-    </div>
-)
+    )
+ }
 }
-
 export default Carometro
